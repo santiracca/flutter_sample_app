@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import './screens/second_screen.dart';
+import './widgets/infobar.dart';
 
 void main() => runApp(MainApp());
 
@@ -8,6 +10,36 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: HomePage(),
+      routes: {
+        "/second": (context) => SecondScreen(),
+      },
+      theme: ThemeData(
+        appBarTheme: AppBarTheme(
+          brightness: Brightness.light,
+          color: Colors.white,
+          textTheme: TextTheme(
+            headline6: TextStyle(color: Colors.black),
+          ),
+        ),
+        buttonTheme: ButtonThemeData(
+          buttonColor: Colors.deepOrange,
+          textTheme: ButtonTextTheme.primary,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(6),
+          ),
+        ),
+        brightness: Brightness.light,
+      ),
+      darkTheme: ThemeData(
+        buttonTheme: ButtonThemeData(
+          buttonColor: Colors.deepOrange,
+          textTheme: ButtonTextTheme.primary,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(6),
+          ),
+        ),
+        brightness: Brightness.dark,
+      ),
     );
   }
 }
@@ -27,72 +59,19 @@ class _HomePageState extends State<HomePage> {
         title: Text('Material App Demo'),
       ),
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Text('Text one'),
-            Row(
-              children: [
-                FlatButton(
-                  child: Text('Text of Flat Button'),
-                  onPressed: () {},
-                ),
-                RaisedButton(
-                  onPressed: () {},
-                  child: Text('Raised Button'),
-                  color: Color(0xFFFF00),
-                  elevation: 10,
-                ),
-                OutlineButton(
-                  onPressed: () {},
-                  child: Text('Outline Button'),
-                )
-              ],
-            ),
-            Switch(onChanged: (isEnabled) {}, value: true),
-            Slider(
-              onChanged: (value) {
-                setState(() {
-                  sliderValue = value;
-                });
-              },
-              value: sliderValue,
-              min: 0,
-              max: 100,
-            ),
-            Container(
-              margin: EdgeInsets.all(12),
-              child: Image(
-                image: NetworkImage(""),
-                height: 200,
-                width: MediaQuery.of(context).size.width,
-                fit: BoxFit.cover,
-              ),
-            ),
-            SizedBox(height: 10),
-            Container(
-              margin: EdgeInsets.all(10),
-              child: TextField(
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Input',
-                    hintText: 'Write here',
-                    suffix: IconButton(
-                      icon: Icon(Icons.search),
-                      onPressed: () {},
-                    ),
-                    prefix: IconButton(
-                      icon: Icon(
-                        Icons.security,
-                      ),
-                      onPressed: () {},
-                    )),
-              ),
-            ),
-            SizedBox(
-              height: 80,
-            )
-          ],
-        ),
+        child: Column(children: [
+          InfoBar(
+            content: 'This is the cool info bar',
+          ),
+          RaisedButton(
+            child: Text('Go to second page'),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (ctx) => SecondScreen()),
+              );
+            },
+          )
+        ]),
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.home),
